@@ -16,9 +16,11 @@ bot.on('guildMemberAdd', member => {
 });
 
 bot.on('message', msg => {
-    if(msg.content === prefix + "site") {
-      msg.channel.send("https://www.emmanuel-kasomo.yo.fr");
-      console.log("Une personne a demandé le lien de ton site!");
+    if(!message.author.bot) {
+        if(msg.content === prefix + "site") {
+          msg.channel.send("https://www.emmanuel-kasomo.yo.fr");
+          console.log("Une personne a demandé le lien de ton site!");
+        }
     }
 });
 

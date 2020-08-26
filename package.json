@@ -1,0 +1,10 @@
+{
+  "name": "NeverBrokeAgain",
+  "version": "1.0.0",
+  "description": "Bot RP by PapiForce",
+  "main": "index.js",
+  "author": "PapiForce",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}

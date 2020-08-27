@@ -4,22 +4,31 @@ const token = process.env.token;
 const prefix = ("!");
 
 bot.on('ready', function() {
-    console.log("Je suis prêt!");
+    console.log("Connexion à " + bot.user.username + " - #" + bot.user.id + " [REUSSITE]");
     bot.user.setActivity("Greed Island").catch(console.error);
 });
 
 bot.on('guildMemberAdd', member => {
-    member.createDM().then(channel => {
-        return channel.send("Bienvenue sur le serveur " + member.displayName + "!");
-        console.log(`${member.displayName} à rejoins le serveur.`);
-    }).catch(console.error)
+    member.guild.channels.cache.find(channel => channel.id === "748331910643712100").send("**" + member.displayName + "** vient d'attérrir sur notre serveur! Nous sommes désormais **" + member.guild.memberCount + "**!");
+    member.roles.add("748325862075662476").then(mbr => {
+        console.log(member.displayName + " - Rôle attribué [REUSSITE]")
+    }).catch(() => {
+        console.log(member.displayName + " - Rôle attribué [ECHEC]");
+    });
 });
 
+bot.on('guildMemberRemove', member => {
+    member.guild.channels.cache.find(channel => channel.id === "748331910643712100").sebd("**" + member.displayName + "** vient de décoller et retourne sur la lune! Nous sommes désormais **" + member.guild.memberCount + "** survivants!");
+})
+
 bot.on('message', msg => {
-    if(!message.author.bot) {
+    if(!msg.author.bot && msg.channel.type !== "dm") {
         if(msg.content === prefix + "site") {
-          msg.channel.send("https://www.emmanuel-kasomo.yo.fr");
-          console.log("Une personne a demandé le lien de ton site!");
+          msg.reply("voici le lien: __*https://www.emmanuel-kasomo.yo.fr*__");
+        }
+
+        if(msg.content === prefix + "pp") {
+          msg.channel.send(msg.author.displayAvatarURL());
         }
     }
 });

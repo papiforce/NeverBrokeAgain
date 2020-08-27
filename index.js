@@ -23,10 +23,6 @@ bot.on('guildMemberRemove', member => {
 
 bot.on('message', msg => {
     if(!msg.author.bot && msg.channel.type !== "dm") {
-        if(msg.content === prefix + "site") {
-          msg.reply("voici le lien: __*https://www.emmanuel-kasomo.yo.fr*__");
-        }
-
         if(msg.content === prefix + "pp") {
           msg.channel.send(msg.author.displayAvatarURL());
         }

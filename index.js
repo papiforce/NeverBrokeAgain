@@ -4,7 +4,7 @@ const token = process.env.token;
 const prefix = ("!");
 
 bot.on('ready', function() {
-    console.log("Connexion à " + bot.user.username + " - #" + bot.user.id + " [REUSSITE]");
+    console.log(bot.user.username + "#" + bot.user.id + " - Connexion [REUSSITE]");
     bot.user.setActivity("Greed Island").catch(console.error);
 });
 

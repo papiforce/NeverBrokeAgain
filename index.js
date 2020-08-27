@@ -9,23 +9,53 @@ bot.on('ready', function() {
 });
 
 bot.on('guildMemberAdd', member => {
-    member.guild.channels.cache.find(channel => channel.id === "748331910643712100").send("**" + member.displayName + "** vient d'attérrir sur notre serveur! Nous sommes désormais **" + member.guild.memberCount + "**!");
-    member.roles.add("748325862075662476").then(mbr => {
-        console.log(member.displayName + " - Rôle attribué [REUSSITE]")
-    }).catch(() => {
-        console.log(member.displayName + " - Rôle attribué [ECHEC]");
-    });
+    const welcomeChannel = member.guild.channels.cache.find(channel => channel.id === '748331910643712100');
+    const welcomeMessage = welcomeChannel.send(`**${member}** vient d'attérrir sur notre serveur! Nous sommes **${member.guild.memberCount}** survivants désormais!`);
 });
 
 bot.on('guildMemberRemove', member => {
-    member.guild.channels.cache.find(channel => channel.id === "748331910643712100").send("**" + member.displayName + "** vient de décoller et retourne sur la lune! Nous sommes désormais **" + member.guild.memberCount + "** survivants!");
-})
+    const goodbyeChannel = member.guild.channels.cache.find(channel => channel.id === "748331910643712100");
+    goodbyeChannel.send(`**${member}** vient de décoller et retourne sur la lune! Nous sommes **${member.guild.memberCount}** survivants désormais!`);
+});
 
-bot.on('message', msg => {
-    if(!msg.author.bot && msg.channel.type !== "dm") {
-        if(msg.content === prefix + "pp") {
-          msg.channel.send(msg.author.displayAvatarURL());
+bot.on('messageReactionAdd', async (reaction, user) => {
+  	if(reaction.partial) {
+    		try {
+    			   await reaction.fetch();
+    		} catch (error) {
+      			console.log('Something went wrong when fetching the message: ', error);
+      			return;
+    		}
+  	}
+
+    if(reaction.emoji.name === '✅' && reaction.message.id === '748500116846936095') {
+        const role = reaction.message.guild.roles.cache.find(role => role.id === '748325862075662476');
+        const member = reaction.message.guild.members.cache.get(user.id).roles.add('748325862075662476');
+    }
+});
+
+bot.on('messageReactionRemove', async (reaction, user) => {
+    if(reaction.partial) {
+        try {
+             await reaction.fetch();
+        } catch (error) {
+            console.log('Something went wrong when fetching the message: ', error);
+            return;
         }
+    }
+
+    if(reaction.message.id === '748500116846936095') {
+        const role = reaction.message.guild.roles.cache.find(role => role.id === '748325862075662476');
+        const member = reaction.message.guild.members.cache.get(user.id).roles.remove('748325862075662476');
+    }
+});
+
+bot.on('message', async msg => {
+    if(msg.author.bot || msg.channel.type === 'dm') {return}
+    console.log(msg);
+
+    if(msg.content === prefix + "pp") {
+        msg.channel.send(msg.author.displayAvatarURL());
     }
 });
 

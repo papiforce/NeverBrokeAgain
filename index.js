@@ -52,9 +52,16 @@ bot.on('messageReactionRemove', async (reaction, user) => {
 
 bot.on('message', async msg => {
     if(msg.author.bot || msg.channel.type === 'dm') {return}
-    console.log(msg);
 
-    if(msg.content === prefix + "pp") {
+    let msgToArray = msg.content.split(' ');
+    let cmd = msgToArray[0];
+    let args = msg.content.substring(msg.content.indexOf(' ')+1);
+
+    if(!msg.content.startsWith(prefix)) {return}
+    let cmdfile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(cmd.slice(prefix.length)))
+    if(cmdfile) {cmdfile.run(bot,msg,args)}
+
+    if(cmd === `${prefix}pp`) {
         msg.channel.send(msg.author.displayAvatarURL());
     }
 });

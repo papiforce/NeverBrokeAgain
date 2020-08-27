@@ -18,7 +18,7 @@ bot.on('guildMemberAdd', member => {
 });
 
 bot.on('guildMemberRemove', member => {
-    member.guild.channels.cache.find(channel => channel.id === "748331910643712100").sebd("**" + member.displayName + "** vient de décoller et retourne sur la lune! Nous sommes désormais **" + member.guild.memberCount + "** survivants!");
+    member.guild.channels.cache.find(channel => channel.id === "748331910643712100").send("**" + member.displayName + "** vient de décoller et retourne sur la lune! Nous sommes désormais **" + member.guild.memberCount + "** survivants!");
 })
 
 bot.on('message', msg => {

@@ -50,14 +50,14 @@ bot.on('messageReactionRemove', async (reaction, user) => {
     }
 });
 
-bot.on('message', async msg => {
-    if(msg.author.bot || msg.channel.type === 'dm' || !msg.content.startsWith(prefix)) {return}
+bot.on('message', async message => {
+    if(message.author.bot || message.channel.type === 'dm' || !message.content.startsWith(prefix)) {return}
 
-    const args = msg.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
 
     if(cmd === 'pp') {
-        msg.channel.send(msg.author.displayAvatarURL());
+        message.channel.send(message.author.displayAvatarURL());
     }
 });
 

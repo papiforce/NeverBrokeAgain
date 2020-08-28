@@ -51,17 +51,12 @@ bot.on('messageReactionRemove', async (reaction, user) => {
 });
 
 bot.on('message', async msg => {
-    if(msg.author.bot || msg.channel.type === 'dm') {return}
+    if(msg.author.bot || msg.channel.type === 'dm' || !msg.content.startsWith(prefix)) {return}
 
-    let msgToArray = msg.content.split(' ');
-    let cmd = msgToArray[0];
-    let args = msg.content.substring(msg.content.indexOf(' ')+1);
+    const args = msg.content.slice(prefix.length).split(/ +/);
+    const cmd = args.shift().toLowerCase();
 
-    if(!msg.content.startsWith(prefix)) {return}
-    let cmdfile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(cmd.slice(prefix.length)))
-    if(cmdfile) {cmdfile.run(bot,msg,args)}
-
-    if(cmd === `${prefix}pp`) {
+    if(cmd === 'pp') {
         msg.channel.send(msg.author.displayAvatarURL());
     }
 });
